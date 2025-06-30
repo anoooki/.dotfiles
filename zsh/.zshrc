@@ -66,8 +66,10 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting poetry)
+
+source <(fzf --zsh)
 source $ZSH/oh-my-zsh.sh
 eval "$(starship init zsh)"
 # User configuration
@@ -93,7 +95,13 @@ eval "$(starship init zsh)"
 # For a full list of active aliases, run `alias`.
 #
 alias n="nvim"
+alias cat="bat"
+
 export EDITOR='nvim'
 export NVM_DIR="$HOME/.nvm"
+
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Created by `pipx` on 2025-06-29 07:21:17
+export PATH="$PATH:/home/eli/.local/bin"
