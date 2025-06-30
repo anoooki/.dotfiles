@@ -16,15 +16,21 @@ return {
 				"prettier", -- ts/js formatter
 				"stylua", -- lua formatter
 				"eslint_d", -- ts/js linter
-				"ruff",
+				"ruff", -- python linter
+				"mypy", -- python static type checker
+				"pyright", -- python lsp
+				"black", -- python formatter
 			},
 			-- auto-install configured formatters & linters (with null-ls)
 			automatic_installation = true,
 		})
 
 		local sources = {
-			formatting.prettier.with({ filetypes = { "html", "json", "yaml", "markdown" } }),
+			formatting.prettier,
 			formatting.stylua,
+			formatting.black,
+			diagnostics.ruff,
+			diagnostics.mypy,
 		}
 
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
@@ -33,7 +39,7 @@ return {
 			sources = sources,
 			-- you can reuse a shared lspconfig on_attach callback here
 			on_attach = function(client, bufnr)
-				if client.supports_method("textDocument/formatting") then
+				if client:supports_method("textDocument/formatting") then
 					vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 					vim.api.nvim_create_autocmd("BufWritePre", {
 						group = augroup,

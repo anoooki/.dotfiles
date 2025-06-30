@@ -58,23 +58,31 @@ return {
 
 		local servers = {
 			ts_ls = {},
-			lua_ls = {
-				settings = {
-					Lua = {
-						diagnostics = {
-							globals = { "vim" },
-						},
-					},
-				},
-			},
-			html = {
-				filetypes = { "html", "twig" },
-			},
+			lua_ls = {},
+			html = {},
 			cssls = {},
 			jsonls = {},
 			tailwindcss = {},
 			pyright = {},
 		}
+
+		vim.lsp.config("lua_ls", {
+			settings = {
+				Lua = {
+					runtime = {
+						version = "LuaJIT",
+					},
+					diagnostics = {
+						globals = { "vim" },
+					},
+				},
+			},
+		})
+		vim.lsp.config("jsonls", {
+			init_options = {
+				provideFormatter = false,
+			},
+		})
 
 		require("mason").setup({
 			ui = {
@@ -88,15 +96,6 @@ return {
 
 		require("mason-lspconfig").setup({
 			ensure_installed = vim.tbl_keys(servers or {}),
-			automatic_installation = true,
-			handlers = {
-				function(server_name)
-					local server = servers[server_name] or {}
-					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-
-					require("lspconfig")[server_name].setup(server)
-				end,
-			},
 		})
 	end,
 }
