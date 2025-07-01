@@ -3,7 +3,6 @@ return {
 	dependencies = {
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
-		"hrsh7th/cmp-nvim-lsp",
 	},
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -52,37 +51,35 @@ return {
 			end,
 		})
 
-		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
+		--[[ local capabilities = vim.lsp.protocol.make_client_capabilities()
+		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities()) ]]
+
 		vim.diagnostic.config({ virtual_text = true })
 
 		local servers = {
 			ts_ls = {},
-			lua_ls = {},
-			html = {},
-			cssls = {},
-			jsonls = {},
-			tailwindcss = {},
-			pyright = {},
-		}
-
-		vim.lsp.config("lua_ls", {
-			settings = {
-				Lua = {
-					runtime = {
-						version = "LuaJIT",
-					},
-					diagnostics = {
-						globals = { "vim" },
+			lua_ls = {
+				settings = {
+					Lua = {
+						runtime = {
+							version = "LuaJIT",
+						},
+						diagnostics = {
+							globals = { "vim" },
+						},
 					},
 				},
 			},
-		})
-		vim.lsp.config("jsonls", {
-			init_options = {
-				provideFormatter = false,
+			html = {},
+			cssls = {},
+			jsonls = {
+				init_options = {
+					provideFormatter = false,
+				},
 			},
-		})
+			tailwindcss = {},
+			pyright = {},
+		}
 
 		require("mason").setup({
 			ui = {
@@ -97,5 +94,10 @@ return {
 		require("mason-lspconfig").setup({
 			ensure_installed = vim.tbl_keys(servers or {}),
 		})
+
+		-- Loop through the "servers" and use them configuration
+		for server, config in pairs(servers) do
+			vim.lsp.config(server, config)
+		end
 	end,
 }
