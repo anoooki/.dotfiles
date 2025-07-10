@@ -13,25 +13,22 @@
     "custom/l_end",
     "hyprland/language",
     "pulseaudio",
-    "custom/power",
     "custom/r_end",
   ],
-  "mpris": {
-    "format": "{player_icon} {dynamic}",
-    "format-paused": "{status_icon} {dynamic}",
-    "player-icons": {
-      "default": "▶",
-      "spotify": " ",
-      "mpv": "🎵",
+  "group/hardware": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 500,
+      "transition-left-to-right": false,
     },
-    "status-icons": {
-      "playing": "▶",
-      "paused": "",
-    },
-    "dynamic-order": ["artist", "title"],
-    "title-len": 10,
-    "ignored-players": ["firefox"],
-    "interval": 1,
+    "modules": ["custom/temperature", "temperature"],
+  },
+  "temperature": {
+    "format": "{temperatureC}°C",
+    "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
+  },
+  "custom/temperature": {
+    "format": "",
   },
   "custom/power": {
     "format": "{}",
@@ -50,6 +47,10 @@
     "interval": "once",
     "tooltip": false,
   },
+  "tray": {
+    "icon-size": 14,
+    "spacing": 5,
+  },
   "hyprland/workspaces": {
     "format": "{icon}",
     "on-click": "activate",
@@ -61,10 +62,12 @@
   "hyprland/language": {
     "format-en": "US",
     "format-ru": "RU",
+    "tooltip": false,
   },
   "clock": {
     "format": "{:%I:%M %p}",
     "rotate": 0,
+    "locale": "en_DK.UTF-8",
     "format-alt": "{:%R 󰃭 %d·%m·%y}",
     "tooltip-format": "<span>{calendar}</span>",
     "calendar": {
@@ -72,6 +75,7 @@
       "mode-mon-col": 3,
       "on-click-right": "mode",
       "format": {
+        "weeks": "{:%W}",
         "months": "<span color='#ffead3'><b>{}</b></span>",
         "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
         "today": "<span color='#ff6699'><b>{}</b></span>",
@@ -87,8 +91,8 @@
     "format": "{icon}  {volume}",
     "rotate": 0,
     "format-muted": "󰖁 MUTED",
-    "on-click": "pamixer -t",
-    "tooltip-format": "{icon} {desc} // {volume}%",
+    "on-click": "pactl set-sink-mute 0 toggle",
+    "tooltip-format": "{desc}",
     "scroll-step": 5,
     "format-icons": {
       "headphone": "",
