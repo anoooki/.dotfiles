@@ -3,6 +3,7 @@ return {
 	dependencies = {
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
+		"saghen/blink.cmp",
 	},
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -51,9 +52,6 @@ return {
 			end,
 		})
 
-		--[[ local capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities()) ]]
-
 		vim.diagnostic.config({ virtual_text = true })
 
 		local servers = {
@@ -78,7 +76,7 @@ return {
 				},
 			},
 			tailwindcss = {},
-			pyright = {},
+			basedpyright = {},
 		}
 
 		require("mason").setup({
@@ -96,8 +94,12 @@ return {
 		})
 
 		-- Loop through the "servers" and use them configuration
+		-- local lspconfig = require("lspconfig")
+
 		for server, config in pairs(servers) do
 			vim.lsp.config(server, config)
+			-- config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+			-- lspconfig[server].setup(config)
 		end
 	end,
 }

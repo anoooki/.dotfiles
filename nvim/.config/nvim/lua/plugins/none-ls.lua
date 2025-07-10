@@ -18,7 +18,6 @@ return {
 				"eslint_d", -- ts/js linter
 				"ruff", -- python linter
 				"mypy", -- python static type checker
-				"pyright", -- python lsp
 				"black", -- python formatter
 			},
 			-- auto-install configured formatters & linters (with null-ls)
