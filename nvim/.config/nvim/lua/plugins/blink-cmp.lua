@@ -28,12 +28,15 @@ return {
 		appearance = {
 			-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
 			-- Adjusts spacing to ensure icons are aligned
-			use_nvim_cmp_as_default = true,
 			nerd_font_variant = "mono",
 		},
 
 		-- (Default) Only show the documentation popup when manually triggered
 		completion = {
+			documentation = {
+				auto_show = true,
+				auto_show_delay_ms = 800,
+			},
 			list = { selection = { preselect = false } },
 		},
 

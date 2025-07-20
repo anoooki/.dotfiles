@@ -3,7 +3,6 @@ return {
 	dependencies = {
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
-		"saghen/blink.cmp",
 	},
 	config = function()
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -53,6 +52,7 @@ return {
 		})
 
 		vim.diagnostic.config({ virtual_text = true })
+		-- vim.lsp.inlay_hint.enable(true)
 
 		local servers = {
 			ts_ls = {},
@@ -70,11 +70,7 @@ return {
 			},
 			html = {},
 			cssls = {},
-			jsonls = {
-				init_options = {
-					provideFormatter = false,
-				},
-			},
+			jsonls = {},
 			tailwindcss = {},
 			basedpyright = {},
 		}
@@ -94,12 +90,8 @@ return {
 		})
 
 		-- Loop through the "servers" and use them configuration
-		-- local lspconfig = require("lspconfig")
-
 		for server, config in pairs(servers) do
 			vim.lsp.config(server, config)
-			-- config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
-			-- lspconfig[server].setup(config)
 		end
 	end,
 }
