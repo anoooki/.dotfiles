@@ -97,7 +97,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-alias n="nvim"
+alias n="nvim ."
 alias cat="bat"
 
 export EDITOR='nvim'
