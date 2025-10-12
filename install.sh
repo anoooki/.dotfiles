@@ -1,11 +1,12 @@
 #!/bin/bash
 
 PACKAGES=(
-7zip
 amd-ucode
 bat
 bluez
 bluez-utils
+btop
+clang
 dunst
 fd
 feh
@@ -23,14 +24,19 @@ libnotify
 man-db
 neovim
 networkmanager
+noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
+noto-fonts-extra
+ttf-jetbrains-mono-nerd
+woff2-font-awesome
+ttf-cascadia-mono-nerd
+ttf-ia-writer
 nvidia
 nvidia-utils
 openssh
 pacman-contrib
 pavucontrol
-pipewire-pulse
 reflector
 ripgrep
 slurp
@@ -38,8 +44,6 @@ starship
 stow
 telegram-desktop
 tmux
-ttf-jetbrains-mono-nerd
-unzip
 vlc
 waybar
 wl-clipboard
@@ -48,15 +52,26 @@ xdg-desktop-portal-hyprland
 xdg-user-dirs
 yazi
 zsh
+pipewire
+pipewire-alsa
+pipewire-pulse
+pipewire-jack
+wireplumber
+alsa-utils
+sof-firmware
+unzip
+unrar
+p7zip
+zip
 	)
 
 echo "Installing pacman packges..."
 sudo pacman -Syu --noconfirm
 
-for pkg in "${PACKAGES}"; do
+for pkg in "${PACKAGES[@]}"; do
     if ! pacman -Qi "$pkg" &>/dev/null; then
         echo "Installing $pkg..."
-        sudo pacman -S --noconfirm "$pkg"
+        sudo pacman -S --needed --noconfirm "$pkg"
     else
         echo "$pkg is already installed."
     fi
