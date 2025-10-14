@@ -68,7 +68,11 @@ return {
 					},
 				},
 			},
-			html = {},
+			html = {
+				init_options = {
+					provideFormatter = false,
+				},
+			},
 			cssls = {},
 			jsonls = {},
 			tailwindcss = {},

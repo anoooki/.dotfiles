@@ -23,4 +23,5 @@ ln -snf ~/.config/current/theme/neovim.lua ~/.config/nvim/lua/plugins/colorschem
 
 hyprctl reload
 pkill -SIGUSR2 btop
+pkill -SIGUSR2 ghostty
 pkill -USR2 waybar 
