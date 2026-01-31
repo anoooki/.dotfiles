@@ -72,6 +72,7 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting poetry)
 source <(fzf --zsh)
 source $ZSH/oh-my-zsh.sh
 eval "$(starship init zsh)"
+eval "$(zoxide init zsh)"
 
 export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git --exclude node_modules"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
