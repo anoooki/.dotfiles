@@ -100,6 +100,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 #
 alias n="nvim ."
 alias cat="bat"
+alias lg="lazygit"
 
 export EDITOR='nvim'
 export NVM_DIR="$HOME/.nvm"
