@@ -1,0 +1,49 @@
+[global]
+width = 350
+height = (80, 200)
+offset = (15,15)
+origin = top-right
+alignment = "left"
+vertical_alignment = "center"
+padding = 16
+gap_size = 10
+horizontal_padding = 20
+text_icon_padding = 12
+icon_position = "left"
+min_icon_size = 48
+max_icon_size = 64
+icon_corner_radius = 8
+frame_width = 2
+corner_radius = 10
+progress_bar = true
+progress_bar_height = 6
+progress_bar_min_width = 250
+progress_bar_max_width = 380
+progress_bar_corner_radius = 2
+progress_bar_corners = all
+progress_bar_frame_width = 0
+highlight = "#6e94b2"
+font = "JetBrains Mono Nerd Font Medium 11"
+stack_duplicates = true
+mouse_left_click = "do_action"
+mouse_middle_click = "close_all"
+mouse_right_click = "close_current"
+browser = "firefox"
+
+[urgency_low]
+background = "#141415"
+foreground = "#cdcdcd"
+frame_color = "#595959aa"
+timeout = 5
+
+[urgency_normal]
+background = "#141415"
+foreground = "#cdcdcd"
+frame_color = "#8faf77"
+timeout = 8
+
+[urgency_critical]
+background = "#141415"
+foreground = "#cdcdcd"
+frame_color = "#d8647e"
+timeout = 0
