@@ -1,45 +1,72 @@
-return {
-	"nvim-telescope/telescope.nvim",
-	event = "VimEnter",
-	branch = "0.1.x",
-	dependencies = {
-		"nvim-lua/plenary.nvim",
-		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-		{ "nvim-telescope/telescope-ui-select.nvim" },
-		{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
-	},
-	config = function()
-		local builtin = require("telescope.builtin")
-		local actions = require("telescope.actions")
+vim.pack.add({
+	"https://github.com/nvim-lua/plenary.nvim",
+	"https://github.com/nvim-telescope/telescope-fzf-native.nvim",
+	"https://github.com/nvim-telescope/telescope.nvim",
+})
 
-		require("telescope").setup({
-			defauls = {
-				mappings = {
-					i = {
-						["<C-k>"] = actions.move_selection_previous,
-						["<C-j>"] = actions.move_selection_next,
-					},
-				},
-			},
-			pickers = {
-				find_files = {
-					file_ignore_patterns = { "node_modules", ".git", ".venv" },
-					hidden = true,
-				},
-			},
-			extensions = {
-				["ui-select"] = {
-					require("telescope.themes").get_dropdown(),
-				},
-			},
-		})
-
-		-- Enable telescope extensions if they are installed
-		pcall(require("telescope").load_extension, "fzf")
-		pcall(require("telescope").load_extension, "ui-select")
-
-		vim.keymap.set("n", "<leader>ff", builtin.find_files)
-		vim.keymap.set("n", "<leader>fw", builtin.live_grep)
-		vim.keymap.set("n", "<leader>fr", builtin.oldfiles)
+vim.api.nvim_create_autocmd("PackChanged", {
+	callback = function(ev)
+		if ev.data.spec.name == "telescope-fzf-native.nvim" and ev.data.kind == "install" then
+			vim.system({ "make" }, { cwd = ev.data.spec.path }):wait()
+		end
 	end,
-}
+})
+
+local builtin = require("telescope.builtin")
+
+vim.keymap.set("n", "<leader>ff", builtin.find_files)
+vim.keymap.set("n", "<leader>fw", builtin.live_grep)
+vim.keymap.set("n", "<leader>fr", builtin.oldfiles)
+
+local map = function(keys, func, desc, mode)
+	mode = mode or "n"
+	vim.keymap.set(mode, keys, func, { desc = "LSP: " .. desc })
+end
+
+-- Jump to the definition of the word under your cursor.
+--  This is where a variable was first declared, or where a function is defined, etc.
+--  To jump back, press <C-t>.
+map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
+
+-- Find references for the word under your cursor.
+map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
+
+-- Jump to the implementation of the word under your cursor.
+--  Useful when your language has ways of declaring types without an actual implementation.
+map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+
+-- Jump to the type of the word under your cursor.
+--  Useful when you're not sure what type a variable is and you want to see
+--  the definition of its *type*, not where it was *defined*.
+map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
+
+-- Fuzzy find all the symbols in your current document.
+--  Symbols are things like variables, functions, types, etc.
+map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+
+-- Fuzzy find all the symbols in your current workspace.
+--  Similar to document symbols, except searches over your entire project.
+map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+
+-- Rename the variable under your cursor.
+--  Most Language Servers support renaming across files, etc.
+map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
+
+-- Execute a code action, usually your cursor needs to be on top of an error
+-- or a suggestion from your LSP for this to activate.
+map("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction", { "n", "x" })
+
+-- WARN: This is not Goto Definition, this is Goto Declaration.
+--  For example, in C this would take you to the header.
+map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+require("telescope").setup({
+	pickers = {
+		find_files = {
+			file_ignore_patterns = { "node_modules" },
+			hidden = true,
+		},
+	},
+})
+
+-- Enable telescope extensions if they are installed
+pcall(require("telescope").load_extension, "fzf")

@@ -1,12 +1,3 @@
-return {
-	{
-		"vague2k/vague.nvim",
-		lazy = false,
-	},
-	{
-		"catppuccin/nvim",
-		lazy = false,
-		name = "catppuccin",
-		priority = 1000,
-	},
-}
+vim.pack.add({
+	"https://github.com/vague-theme/vague.nvim",
+})

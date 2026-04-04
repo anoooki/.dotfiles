@@ -1,8 +1,17 @@
-return {
-	"stevearc/oil.nvim",
-	opts = {
-		delete_to_trash = true,
+vim.pack.add({
+	"https://github.com/nvim-tree/nvim-web-devicons",
+	"https://github.com/stevearc/oil.nvim",
+})
+
+require("oil").setup({
+	delete_to_trash = true,
+	skip_confirm_for_simple_edits = false,
+
+	float = {
+		border = "rounded",
 	},
-	dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
-	lazy = false,
-}
+
+	confirmation = {
+		border = "rounded",
+	},
+})
