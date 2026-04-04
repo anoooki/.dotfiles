@@ -24,4 +24,6 @@ vim.wo.signcolumn = "yes" -- Keep signcolumn on by default (default: 'auto')
 vim.o.updatetime = 250
 vim.o.showmode = false -- We don't need to see things like -- INSERT -- anymore (default: true)
 vim.o.cmdheight = 1 -- More space in the Neovim command line for displaying messages (default: 1)
+vim.opt.fillchars = { eob = " " }
+vim.o.winborder = "rounded"
 vim.diagnostic.config({ virtual_text = true })
