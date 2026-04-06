@@ -4,16 +4,36 @@ vim.pack.add({
 })
 
 require("blink.cmp").setup({
-	keymap = { preset = "default" },
+	keymap = { preset = "super-tab" },
 
 	appearance = {
-		-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-		-- Adjusts spacing to ensure icons are aligned
 		nerd_font_variant = "mono",
 	},
 
 	sources = {
 		default = { "lsp", "path", "snippets", "buffer" },
+	},
+	completion = {
+		documentation = {
+			auto_show = true,
+			auto_show_delay_ms = 200,
+		},
+		menu = {
+			scrollbar = true,
+			draw = {
+				columns = {
+					{ "kind_icon" },
+					{ "label", "label_description", gap = 1 },
+					{ "kind" },
+				},
+			},
+		},
+		list = {
+			selection = {
+				preselect = true,
+				auto_insert = false,
+			},
+		},
 	},
 
 	signature = { enabled = true },
